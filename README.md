@@ -233,22 +233,23 @@ The long vowels are indicated by *ā*, *ī* and *ū*, and the *maddah* may
 
 ## Usage
 
-- **Python 3.9 required**
+**Python 3.9 required**
 
 ```bash
-python phonetic.py [-t arab_text] [-f arab_file]
+python ArabTransliterator.py [-t arab_text] [-f arab_file]
 ```
 
 **Ex**.
 
 ```bash
-python phonetic.py "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَٱلَّذِينَ هَادُوا۟ وَٱلنَّصَـٰرَىٰ وَٱلصَّـٰبِـِٔينَ مَنْ ءَامَنَ بِٱللَّهِ وَٱلْيَوْمِ ٱلْـَٔاخِرِ وَعَمِلَ صَـٰلِحًۭا فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُ
+python3 ArabTransliterator.py -t "وَلَقَدْ آتَيْنَا مُوسَى الْكِتَابَ وَقَفَّيْنَا مِن بَعْدِهِ بِالرُّسُلِ ۖ وَآتَيْنَا عِيسَى ابْنَ مَرْيَمَ الْبَيِّنَاتِ وَأَيَّدْنَاهُ بِرُوحِ الْقُدُسِ ۗ أَفَكُلَّمَا جَاءَكُمْ رَسُولٌ بِمَا لَا تَهْوَىٰ أَنفُسُكُمُ اسْتَكْبَرْتُمْ فَفَرِيقًا كَذَّبْتُمْ وَفَرِيقًا تَقْتُلُونَ
+" 
 ```
 
 **output**
 
 ```
-'inna l-adhīna 'āmanū wālladhīna hādū wālnnaṣaāraā wālṣṣaābiīna man 'āmana bil-lahi wālyawmi l-ākhiri waʿamila ṣal-iḥan falahum 'ajruhum ʿinda rabbihim walā khawfun ʿalayhim walā hum yaḥzanūna
+walaqad ātaynā mūsá alkitaba waqaffaynā min baʿdihi bialrrusuli  wa'ātaynā ʿīsá ibna maryama albayyinati wa'ayyadnahu birūḥi alqudusi  afakullamā jā'akum rasūlun bimā lā tahwá anfusukumu istakbartum fafarīqan kadhdhabtum wafarīqan taqtulūna
 ```
 
 
