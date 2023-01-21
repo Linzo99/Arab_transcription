@@ -49,7 +49,7 @@ class ArabicText(LinkedQueue):
           return self._node is self._parent._tail
 
       def is_word_start(self):
-          return self.prev().is_blank()
+          return self.prev() == u" "
 
       def preceeded(self, n):
           out = u""

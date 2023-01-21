@@ -57,7 +57,11 @@ class ArabTransliterator:
             # handle alif with hamzat wasl
             elif caracter == alphabet.ALIF_WITH_HAMZAT_WASL:
                 if caracter.next() == alphabet.LAM:
-                    out.append(u"a")
+                    if caracter.is_start(): 
+                        out.append(u"a")
+                    else:
+                        out.append("l-")
+                        next(arabic_text)
                 else:
                     out.append(u"i")
 
