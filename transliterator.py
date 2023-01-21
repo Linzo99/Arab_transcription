@@ -12,7 +12,7 @@ class ArabTransliterator:
 
     def translate(self, text):
 
-        out = u""
+        out = [] 
         arabic_text = iter(ArabicText(text))
         #  for c in arabic_text: print(c, end="")
 
@@ -21,7 +21,7 @@ class ArabTransliterator:
             # handle hamza
             if caracter in (alphabet.HAMZA, alphabet.ALIF_WITH_HAMZA_ABOVE, alphabet.ALIF_WITH_HAMZA_BELOW):
                 if caracter.is_mid():
-                    out += u"'"
+                    out.append(u"'")
                 else:
                     continue
 
@@ -31,16 +31,16 @@ class ArabTransliterator:
                 if caracter.next() == alphabet.LAM:
                     # handle long alif
                     if caracter.prev() == alphabet.FATHA: 
-                        out = out[:-1]+u"ā"
+                        out[-1] = u"ā"
                     else:
                         if caracter.is_start():
-                            out += u"a"
+                            out.append("a")
                         if c:=caracter.is_followed_by_sun():
-                            out += '-'.join([self.get(c)]*2)
+                            out.append('-'.join([self.get(c)]*2))
                             next(arabic_text)
                             next(arabic_text)
                         else:
-                            out += u'l-'
+                            out.append(u'l-')
                         next(arabic_text)
                 # followed by sukun
                 elif caracter.next() in (alphabet.SUKUN, alphabet.SMALL_HIGH_ROUNDED_ZERO):
@@ -51,37 +51,37 @@ class ArabTransliterator:
                     continue
                 # preceeded by fatha
                 elif caracter.prev() == alphabet.FATHA:
-                    out = out[:-1]+u"ā"
+                    out[-1] = u"ā"
                     continue
 
             # handle alif with hamzat wasl
             elif caracter == alphabet.ALIF_WITH_HAMZAT_WASL:
                 if caracter.next() == alphabet.LAM:
-                    out += u"a"
+                    out.append(u"a")
                 else:
-                    out += u"i"
+                    out.append(u"i")
 
             # kasra + ya
             elif caracter.is_kasra_followed_by_ya():
-                out += u'ī'
+                out.append(u'ī')
                 next(arabic_text)
                 continue
 
             # damma + wa
             elif caracter.is_damma_followed_by_waw():
                 if caracter.next(2) in alphabet.VOWELS:
-                    out += u"uw"
+                    out.append(u"uw")
                 else:
                     out += u'ū'
                     if caracter.next(2) == alphabet.SHADDA:
-                        out += u'w'
+                        out.append(u'w')
                 next(arabic_text)
                 continue
 
             # handle alif with maddah above
             elif caracter == alphabet.ALIF_WITH_MADDA_ABOVE:
                 if caracter.is_start():
-                    out += u'ā'
+                    out.append(u'ā')
                 elif caracter.is_mid():
                     out += u'’ā'
 
@@ -89,40 +89,40 @@ class ArabTransliterator:
             elif caracter == alphabet.TA_MARBUTA:
                 # space + laam + 'alif
                 if caracter.succeeded(3) == u" "+alphabet.LAM+alphabet.ALIF:
-                    out += u"t"
+                    out.append(u"t")
                 # fatha/damma/kasra + space + laam + 'alif
                 elif caracter.next() in alphabet.VOWELS and caracter.next().succeeded(3) == u" "+alphabet.LAM+alphabet.ALIF:
-                    out += u"t"
+                    out.append(u"t")
                 # Fathatayn, Dammatayn, kasratayn
                 elif caracter.next() in alphabet.TANWIN:
-                    out += u"t"
+                    out.append(u"t")
                 else:
-                    out += u"h"
+                    out.append(u"h")
 
             # handle ALIF_MAKSURA
             elif caracter == alphabet.ALIF_MAKSURA:
                 # preceeded by Fatha
                 if caracter.prev() == alphabet.FATHA:
-                    out = out[:-1]+u"\u00E1"
+                    out[-1] = u"\u00E1"
 
             # handle SHADDA
             elif caracter == alphabet.SHADDA:
                 if caracter.prev() == alphabet.ALIF_MAKSURA:
                     if (p:=caracter.prev(2)) == alphabet.KASRA:
                         if p.is_mid():
-                            out += u"y"
+                            out.append(u"y")
                         elif p.is_end():
-                            out = out[:-1]+u"ī"
+                            out[-1] = u"ī"
                     elif caracter.prev().is_mid():
-                        out += self.get(str(caracter.prev()))
+                        out.append(self.get(str(caracter.prev())))
                 elif caracter.prev().is_mid():
-                    out += self.get(str(caracter.prev()))
+                    out.append(self.get(str(caracter.prev())))
 
             # handle the rest
             else:
-                out += self.get(str(caracter))
+                out.append(self.get(str(caracter)))
 
-        return out
+        return "".join(out)
 
 
 if __name__ == "__main__":
