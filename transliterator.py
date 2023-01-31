@@ -89,20 +89,6 @@ class ArabTransliterator:
                 elif caracter.is_mid():
                     out += u'’ā'
 
-            # handle TA_MARBUTA
-            elif caracter == alphabet.TA_MARBUTA:
-                # space + laam + 'alif
-                if caracter.succeeded(3) == u" "+alphabet.LAM+alphabet.ALIF:
-                    out.append(u"t")
-                # fatha/damma/kasra + space + laam + 'alif
-                elif caracter.next() in alphabet.VOWELS and caracter.next().succeeded(3) == u" "+alphabet.LAM+alphabet.ALIF:
-                    out.append(u"t")
-                # Fathatayn, Dammatayn, kasratayn
-                elif caracter.next() in alphabet.TANWIN:
-                    out.append(u"t")
-                else:
-                    out.append(u"h")
-
             # handle ALIF_MAKSURA
             elif caracter == alphabet.ALIF_MAKSURA:
                 # preceeded by Fatha
@@ -120,7 +106,8 @@ class ArabTransliterator:
                     elif caracter.prev().is_mid():
                         out.append(self.get(str(caracter.prev())))
                 elif caracter.prev().is_mid():
-                    out.append(self.get(str(caracter.prev())))
+                    if len(out)>2 and not out[-2]=="l-": 
+                        out.append(self.get(str(caracter.prev())))
 
             # handle the rest
             else:

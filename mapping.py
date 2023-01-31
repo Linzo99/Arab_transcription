@@ -9,7 +9,7 @@ _mapping = {
     #  alphabet.ALIF_WITH_HAMZA_BELOW: u'\'',
     #  alphabet.YA_WITH_HAMZA_ABOVE: u'\'',  # Ya with Hamza ABOVE
     alphabet.BA: u'b',  # Ba
-    #  alphabet.TA_MARBUTA: chr(0x1e97),
+    alphabet.TA_MARBUTA: u't',
     alphabet.TA: u't',
     alphabet.THA: u'th',
     alphabet.JEEM: u'j',
