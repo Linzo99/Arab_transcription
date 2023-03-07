@@ -11,10 +11,8 @@ class ArabTransliterator:
         return self.table.get(key, '')
 
     def translate(self, text):
-
         out = [] 
         arabic_text = iter(ArabicText(text))
-        #  for c in arabic_text: print(c, end="")
 
         for caracter in arabic_text:
 
@@ -22,8 +20,7 @@ class ArabTransliterator:
             if caracter in (alphabet.HAMZA, alphabet.ALIF_WITH_HAMZA_ABOVE, alphabet.ALIF_WITH_HAMZA_BELOW):
                 if caracter.is_mid():
                     out.append(u"'")
-                else:
-                    continue
+                continue
 
             # handle alif
             elif caracter == alphabet.ALIF:
@@ -64,6 +61,7 @@ class ArabTransliterator:
                         next(arabic_text)
                 else:
                     out.append(u"i")
+                continue
 
             # kasra + ya
             elif caracter.is_kasra_followed_by_ya():
@@ -77,8 +75,8 @@ class ArabTransliterator:
                     out.append(u"uw")
                 else:
                     out += u'ū'
-                    if caracter.next(2) == alphabet.SHADDA:
-                        out.append(u'w')
+                    #  if caracter.next(2) == alphabet.SHADDA:
+                        #  out.append(u'w')
                 next(arabic_text)
                 continue
 
@@ -88,23 +86,35 @@ class ArabTransliterator:
                     out.append(u'ā')
                 elif caracter.is_mid():
                     out += u'’ā'
-
+                continue
             # handle ALIF_MAKSURA
             elif caracter == alphabet.ALIF_MAKSURA:
                 # preceeded by Fatha
-                if caracter.prev() == alphabet.FATHA:
+                if caracter.prev() == alphabet.FATHA and caracter.next() != alphabet.SHADDA:
                     out[-1] = u"\u00E1"
+                continue
 
             # handle SHADDA
             elif caracter == alphabet.SHADDA:
+                # handle ALIF_MAKSURA
+                vow = caracter.prev(2) 
                 if caracter.prev() == alphabet.ALIF_MAKSURA:
-                    if (p:=caracter.prev(2)) == alphabet.KASRA:
-                        if p.is_mid():
+                    if vow == alphabet.KASRA:
+                        if caracter.is_mid():
                             out.append(u"y")
-                        elif p.is_end():
+                        elif caracter.is_end():
                             out[-1] = u"ī"
-                    elif caracter.prev().is_mid():
-                        out.append(self.get(str(caracter.prev())))
+
+                    elif vow == alphabet.FATHA:
+                        out.append(u"yy")
+                    #  elif caracter.prev().is_mid():
+                        #  out.append(self.get(str(caracter.prev())))
+
+                # handle WAW
+                elif caracter.prev() == alphabet.WAW:
+                    if vow == alphabet.DAMMA:
+                        out.append(u"w")
+
                 elif caracter.prev().is_mid():
                     if len(out)>2 and not out[-2]=="l-": 
                         out.append(self.get(str(caracter.prev())))
@@ -131,7 +141,7 @@ if __name__ == "__main__":
     if args.file:
         file = Path(args.file)
         lines = file.read_bytes().decode("utf-8").split("\n")
-        print(*map(translator().translate, lines), sep="\n")
+        print(*map(translator.translate, lines), sep="\n")
 
     elif args.text:
         print(translator.translate(args.text))

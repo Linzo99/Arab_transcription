@@ -43,7 +43,10 @@ class ArabicText(LinkedQueue):
           return self._node is self._parent._head
 
       def is_mid(self):
-          return (not self.is_word_start()) and (not self.next().is_blank())
+          try:
+              return (not self.is_word_start()) and (not self.next().is_blank())
+          except:
+              return False
 
       def is_end(self):
           return self._node is self._parent._tail
