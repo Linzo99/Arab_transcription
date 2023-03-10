@@ -26,19 +26,21 @@ class ArabTransliterator:
             elif caracter == alphabet.ALIF:
                 # handle alif lam
                 if caracter.next() == alphabet.LAM:
-                    # handle long alif
-                    if caracter.prev() == alphabet.FATHA: 
+                    if caracter.is_start():
+                        out.append("a")
+                    # preceeded by fatha
+                    elif caracter.prev() == alphabet.FATHA:
                         out[-1] = u"ā"
-                    else:
-                        if caracter.is_start():
-                            out.append("a")
-                        if c:=caracter.is_followed_by_sun():
-                            out.append('-'.join([self.get(c)]*2))
-                            next(arabic_text)
-                            next(arabic_text)
-                        else:
-                            out.append(u'l-')
+
+                    if c:=caracter.is_followed_by_sun():
+                        sep = '-' if caracter.is_word_start() else ''
+                        out.append(sep.join([self.get(c)]*2))
                         next(arabic_text)
+                        next(arabic_text)
+                    else:
+                        sep = '-' if caracter.is_word_start() else ''
+                        out.append(u'l'+sep)
+                    next(arabic_text)
                 # followed by sukun
                 elif caracter.next() in (alphabet.SUKUN, alphabet.SMALL_HIGH_ROUNDED_ZERO):
                     next(arabic_text)
@@ -46,7 +48,7 @@ class ArabTransliterator:
                 # preceeded by fathatan
                 elif caracter.prev() in alphabet.TANWIN:
                     continue
-                # preceeded by fatha
+
                 elif caracter.prev() == alphabet.FATHA:
                     out[-1] = u"ā"
                     continue
@@ -65,8 +67,14 @@ class ArabTransliterator:
 
             # kasra + ya
             elif caracter.is_kasra_followed_by_ya():
-                out.append(u'ī')
-                next(arabic_text)
+                try:
+                    if caracter.next().next() not in alphabet.VOWELS:
+                        out.append(u'ī')
+                        next(arabic_text)
+                    else:
+                        out.append(u'i')
+                except:
+                    pass
                 continue
 
             # damma + wa
