@@ -7,7 +7,7 @@ _mapping = {
     #  alphabet.ALIF_WITH_HAMZA_ABOVE: u'\'',
     #  alphabet.WAW_WITH_HAMZA_ABOVE: u'\'',
     #  alphabet.ALIF_WITH_HAMZA_BELOW: u'\'',
-    #  alphabet.YA_WITH_HAMZA_ABOVE: u'\'',  # Ya with Hamza ABOVE
+    alphabet.YA_WITH_HAMZA_ABOVE: u'\'',  # Ya with Hamza ABOVE
     alphabet.BA: u'b',  # Ba
     alphabet.TA_MARBUTA: u't',
     alphabet.TA: u't',
