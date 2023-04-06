@@ -72,6 +72,13 @@ class ArabicText(LinkedQueue):
               n -= 1
           return out
 
+      def is_sun(self):
+          c = self.next()
+          if not c: return False
+          if c.is_followed_by_shadda():
+              return self.next().char()
+          return False
+
       def is_followed_by_sun(self):
           lam_node = self.next()
           if lam_node.next().is_followed_by_shadda():

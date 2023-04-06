@@ -22,47 +22,46 @@ class ArabTransliterator:
                     out.append(u"'")
                 continue
 
+            # handle lam
+            elif caracter == alphabet.LAM:
+                # handle alif lam
+                sun = caracter.is_sun()
+                if (p:=caracter.prev()) == alphabet.ALIF:
+                    sep = '-' if p.is_word_start() else ''
+                    out.append("" if sun else "l"+sep)
+
+                # handle alif with hamzat wasl
+                elif (p:=caracter.prev()) == alphabet.ALIF_WITH_HAMZAT_WASL:
+                    out[-1] = u"a" if p.is_start() else "l-"
+
+                else:
+                    out.append("" if sun else "l")
+
+                if sun:
+                    sep = '-' if caracter.prev().is_word_start() else ''
+                    out.append(sep.join([self.get(sun)]*2))
+                    next(arabic_text)
+                    next(arabic_text)
+                    
+
+                continue
+
             # handle alif
             elif caracter == alphabet.ALIF:
-                # handle alif lam
-                if caracter.next() == alphabet.LAM:
-                    if caracter.is_start():
-                        out.append("a")
-                    # preceeded by fatha
-                    elif caracter.prev() == alphabet.FATHA:
-                        out[-1] = u"ā"
-
-                    if c:=caracter.is_followed_by_sun():
-                        sep = '-' if caracter.is_word_start() else ''
-                        out.append(sep.join([self.get(c)]*2))
-                        next(arabic_text)
-                        next(arabic_text)
-                    else:
-                        sep = '-' if caracter.is_word_start() else ''
-                        out.append(u'l'+sep)
-                    next(arabic_text)
                 # followed by sukun
-                elif caracter.next() in (alphabet.SUKUN, alphabet.SMALL_HIGH_ROUNDED_ZERO):
+                if caracter.next() in (alphabet.SUKUN, alphabet.SMALL_HIGH_ROUNDED_ZERO):
                     next(arabic_text)
-                    continue
                 # preceeded by fathatan
                 elif caracter.prev() in alphabet.TANWIN:
-                    continue
+                    pass
 
                 elif caracter.prev() == alphabet.FATHA:
                     out[-1] = u"ā"
-                    continue
+                continue
 
             # handle alif with hamzat wasl
             elif caracter == alphabet.ALIF_WITH_HAMZAT_WASL:
-                if caracter.next() == alphabet.LAM:
-                    if caracter.is_start(): 
-                        out.append(u"a")
-                    else:
-                        out.append("l-")
-                        next(arabic_text)
-                else:
-                    out.append(u"i")
+                out.append(u"i")
                 continue
 
             # kasra + ya
@@ -95,6 +94,7 @@ class ArabTransliterator:
                 elif caracter.is_mid():
                     out += u'’ā'
                 continue
+
             # handle ALIF_MAKSURA
             elif caracter == alphabet.ALIF_MAKSURA:
                 # preceeded by Fatha
@@ -130,6 +130,9 @@ class ArabTransliterator:
             # handle the rest
             else:
                 out.append(self.get(str(caracter)))
+                if caracter.next() in (alphabet.SUKUN, alphabet.SMALL_HIGH_ROUNDED_ZERO):
+                    if caracter.prev() == alphabet.ALIF and caracter.prev().is_word_start():
+                        out[-1] = self.get(str(caracter))+'-'
 
         return "".join(out)
 
