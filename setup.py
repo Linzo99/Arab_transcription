@@ -1,15 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
 setup(
     name='transcription',
     version='0.1',
-    packages=find_packages(),
+    packages=['.', '_types'],
+    include_package_data=True,
     author='Linzo99',
     author_email='sallalioune99@gmail.com',
     description='python script for arab text transliteration',
-    url="https://github.com/Linzo99/Arab_transcription",
+    url="https://github.com/Tariha/transcription",
     install_requires=[]
 )
 
