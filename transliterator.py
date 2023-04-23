@@ -91,7 +91,7 @@ class ArabTransliterator:
             elif caracter == alphabet.ALIF_WITH_MADDA_ABOVE:
                 if caracter.is_start():
                     out.append(u'ā')
-                elif caracter.is_mid():
+                else:
                     out += u'’ā'
                 continue
 
