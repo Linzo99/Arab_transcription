@@ -73,6 +73,8 @@ class ArabTransliterator:
                 if caracter.next(2) not in alphabet.VOWELS:
                     out.append(u'ī')
                     next(arabic_text)
+                else:
+                    out.append(u'i')
                 continue
 
             # damma + waw
@@ -80,6 +82,8 @@ class ArabTransliterator:
                 if caracter.next(2) not in alphabet.VOWELS:
                     out += u'ū'
                     next(arabic_text)
+                else:
+                    out.append(u'u')
                 continue
 
 
