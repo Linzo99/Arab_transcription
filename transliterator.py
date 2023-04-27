@@ -24,8 +24,8 @@ class ArabTransliterator:
 
             # handle lam
             elif caracter == alphabet.LAM:
-                # handle alif lam
                 sun = caracter.is_sun()
+                # handle alif lam
                 if (p:=caracter.prev()) == alphabet.ALIF:
                     sep = '-' if p.is_word_start() else ''
                     out.append("" if sun else "l"+sep)
@@ -48,14 +48,7 @@ class ArabTransliterator:
 
             # handle alif
             elif caracter == alphabet.ALIF:
-                # followed by sukun
-                if caracter.next() in (alphabet.SUKUN, alphabet.SMALL_HIGH_ROUNDED_ZERO):
-                    next(arabic_text)
-                # preceeded by fathatan
-                elif caracter.prev() in alphabet.TANWIN:
-                    pass
-
-                elif caracter.prev() == alphabet.FATHA:
+                if caracter.prev() == alphabet.FATHA:
                     out[-1] = u"ā"
                 continue
 
@@ -64,63 +57,49 @@ class ArabTransliterator:
                 out.append(u"i")
                 continue
 
-            # kasra + ya
-            elif caracter.is_kasra_followed_by_ya():
-                try:
-                    if caracter.next().next() not in alphabet.VOWELS:
-                        out.append(u'ī')
-                        next(arabic_text)
-                    else:
-                        out.append(u'i')
-                except:
-                    pass
-                continue
-
-            # damma + wa
-            elif caracter.is_damma_followed_by_waw():
-                if caracter.next(2) in alphabet.VOWELS:
-                    out.append(u"uw")
-                else:
-                    out += u'ū'
-                    #  if caracter.next(2) == alphabet.SHADDA:
-                        #  out.append(u'w')
-                next(arabic_text)
+            # handle alif maksura
+            elif caracter == alphabet.ALIF_MAKSURA:
+                if caracter.prev() == alphabet.FATHA:
+                    out[-1] = u"\u00E1"
                 continue
 
             # handle alif with maddah above
             elif caracter == alphabet.ALIF_WITH_MADDA_ABOVE:
-                if caracter.is_start():
-                    out.append(u'ā')
-                else:
-                    out += u'’ā'
+                out.append(u'ā' if caracter.is_start() else u'’ā')
                 continue
 
-            # handle ALIF_MAKSURA
-            elif caracter == alphabet.ALIF_MAKSURA:
-                # preceeded by Fatha
-                if caracter.prev() == alphabet.FATHA and caracter.next() != alphabet.SHADDA:
-                    out[-1] = u"\u00E1"
+            # kasra + ya
+            elif caracter.is_kasra_followed_by_ya():
+                if caracter.next(2) not in alphabet.VOWELS:
+                    out.append(u'ī')
+                    next(arabic_text)
                 continue
+
+            # damma + waw
+            elif caracter.is_damma_followed_by_waw():
+                if caracter.next(2) not in alphabet.VOWELS:
+                    out += u'ū'
+                    next(arabic_text)
+                continue
+
 
             # handle SHADDA
             elif caracter == alphabet.SHADDA:
-                # handle ALIF_MAKSURA
                 vow = caracter.prev(2) 
-                if caracter.prev() == alphabet.ALIF_MAKSURA:
-                    if vow == alphabet.KASRA:
-                        if caracter.is_mid():
-                            out.append(u"y")
-                        elif caracter.is_end():
-                            out[-1] = u"ī"
+                # if preceded by YA
+                if caracter.prev() == alphabet.YA:
+                    if vow == alphabet.KASRA and caracter.is_mid():
+                        out.append(u"y")
 
                     elif vow == alphabet.FATHA:
-                        out.append(u"yy")
-                    #  elif caracter.prev().is_mid():
-                        #  out.append(self.get(str(caracter.prev())))
+                        out.append(u"y")
 
-                # handle WAW
+                # if preceded by WAW
                 elif caracter.prev() == alphabet.WAW:
                     if vow == alphabet.DAMMA:
+                        out.append(u"w")
+
+                    elif vow == alphabet.FATHA:
                         out.append(u"w")
 
                 elif caracter.prev().is_mid():
