@@ -65,4 +65,11 @@ _mapping = {
     #  alphabet.ROUNDED_HIGH_STOP_WITH_FILLED_CENTRE: u'',
     #  alphabet.SMALL_LOW_MEEM: u''
     u" ": u" ",
+    # WOLOFAL CARACTERS
+    alphabet.PEH: u'p',
+    alphabet.CEH:  u'c',
+    alphabet.GNEH: u'ñ',
+    alphabet.GAF: u'g',
+    alphabet.EH: u'é',
+    alphabet.OH: u'o'
 }
