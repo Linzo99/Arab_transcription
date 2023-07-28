@@ -2,6 +2,16 @@ import alphabet
 from mapping import _mapping
 from ArabText import ArabicText
 
+def normalize(text):
+    # some text may have shadda coming after a vowel whic in this case
+    # will fail the script, so were swapping
+    text = list(text)
+    for i, c in enumerate(text):
+        if c == alphabet.SHADDA and (text[i-1] in alphabet.VOWELS):
+            text[i],text[i-1] = text[i-1],text[i]
+    return text
+
+
 class ArabTransliterator:
 
     def __init__(self):
@@ -12,6 +22,7 @@ class ArabTransliterator:
 
     def translate(self, text):
         out = [] 
+        text = normalize(text)
         arabic_text = iter(ArabicText(text))
 
         for caracter in arabic_text:
