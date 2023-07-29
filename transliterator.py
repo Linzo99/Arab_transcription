@@ -2,13 +2,14 @@ import alphabet
 from mapping import _mapping
 from ArabText import ArabicText
 
+
 def normalize(text):
     # some text may have shadda coming after a vowel whic in this case
     # will fail the script, so were swapping
     text = list(text)
     for i, c in enumerate(text):
         if c == alphabet.SHADDA and (text[i-1] in alphabet.VOWELS):
-            text[i],text[i-1] = text[i-1],text[i]
+            text[i], text[i-1] = text[i-1], text[i]
     return text
 
 
@@ -28,7 +29,7 @@ class ArabTransliterator:
         for caracter in arabic_text:
 
             # handle hamza
-            if caracter in (alphabet.HAMZA, alphabet.ALIF_WITH_HAMZA_ABOVE, alphabet.ALIF_WITH_HAMZA_BELOW):
+            if caracter in alphabet.HAMZAS:
                 if caracter.is_mid():
                     out.append(u"'")
                 continue
@@ -37,12 +38,12 @@ class ArabTransliterator:
             elif caracter == alphabet.LAM:
                 sun = caracter.is_sun()
                 # handle alif lam
-                if (p:=caracter.prev()) == alphabet.ALIF:
+                if (p := caracter.prev()) == alphabet.ALIF:
                     sep = '-' if p.is_word_start() else ''
                     out.append("" if sun else "l"+sep)
 
                 # handle alif with hamzat wasl
-                elif (p:=caracter.prev()) == alphabet.ALIF_WITH_HAMZAT_WASL:
+                elif (p := caracter.prev()) == alphabet.ALIF_WITH_HAMZAT_WASL:
                     out[-1] = u"a" if p.is_start() else "l-"
 
                 else:
@@ -53,7 +54,6 @@ class ArabTransliterator:
                     out.append(sep.join([self.get(sun)]*2))
                     next(arabic_text)
                     next(arabic_text)
-                    
 
                 continue
 
@@ -97,10 +97,9 @@ class ArabTransliterator:
                     out.append(u'u')
                 continue
 
-
             # handle SHADDA
             elif caracter == alphabet.SHADDA:
-                vow = caracter.prev(2) 
+                vow = caracter.prev(2)
                 # if preceded by YA
                 if caracter.prev() == alphabet.YA:
                     if vow == alphabet.KASRA and caracter.is_mid():
@@ -118,7 +117,7 @@ class ArabTransliterator:
                         out.append(u"w")
 
                 elif caracter.prev().is_mid():
-                    if len(out)>2 and not out[-2]=="l-": 
+                    if len(out) > 2 and (not out[-2] == "l-"):
                         out.append(self.get(str(caracter.prev())))
 
             # handle the rest
@@ -132,7 +131,6 @@ class ArabTransliterator:
 
 
 if __name__ == "__main__":
-    import sys
     from pathlib import Path
     import argparse
 
