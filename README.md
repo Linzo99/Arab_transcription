@@ -1,4 +1,4 @@
-## Phonetic Transcrition
+## Phonetic Transcription
 
 The phonetic transcription below is based on the scheme found in *Arabic Through the Quran* by Alan Jones (Islamic Texts Society, 2008). The correct form of pronunciation will depend on context, especially for the letters *hamza* and *alif maksūra*. The basic form of transcription is shown below.
 
@@ -236,22 +236,25 @@ The long vowels are indicated by *ā*, *ī* and *ū*, and the *maddah* may
 **Python 3.9 or later required**
 
 ```bash
-python3 transliterator.py [-t arab_text] [-f arab_file]
+pip install arab-transcription
+```
+
+```bash
+python3 -m transliterator [-t arab_text] [-f arab_file]
 ```
 
 **Ex**.
 
 ```bash
-python3 transliterator.py -t "وَلَقَدْ آتَيْنَا مُوسَى الْكِتَابَ وَقَفَّيْنَا مِن بَعْدِهِ بِالرُّسُلِ ۖ وَآتَيْنَا عِيسَى ابْنَ مَرْيَمَ الْبَيِّنَاتِ وَأَيَّدْنَاهُ بِرُوحِ الْقُدُسِ ۗ أَفَكُلَّمَا جَاءَكُمْ رَسُولٌ بِمَا لَا تَهْوَىٰ أَنفُسُكُمُ اسْتَكْبَرْتُمْ فَفَرِيقًا كَذَّبْتُمْ وَفَرِيقًا تَقْتُلُونَ
+python3 -m transliterator -t "وَلَقَدْ آتَيْنَا مُوسَى الْكِتَابَ وَقَفَّيْنَا مِن بَعْدِهِ بِالرُّسُلِ ۖ وَآتَيْنَا عِيسَى ابْنَ مَرْيَمَ الْبَيِّنَاتِ وَأَيَّدْنَاهُ بِرُوحِ الْقُدُسِ ۗ أَفَكُلَّمَا جَاءَكُمْ رَسُولٌ بِمَا لَا تَهْوَىٰ أَنفُسُكُمُ اسْتَكْبَرْتُمْ فَفَرِيقًا كَذَّبْتُمْ وَفَرِيقًا تَقْتُلُونَ
 " 
 ```
 
 **output**
 
 ```
-walaqad ātaynā mūsá alkitaba waqaffaynā min baʿdihi bialrrusuli  wa'ātaynā ʿīsá ibna maryama albayyinati wa'ayyadnahu birūḥi alqudusi  afakullamā jā'akum rasūlun bimā lā tahwá anfusukumu istakbartum fafarīqan kadhdhabtum wafarīqan taqtulūna
+walaqad ’ātaynā mūsá l-kitāba waqaffaynā min baʿdihi birrusuli  wa’ātaynā ʿīsá b-na maryama l-bayyināti wa'ayyadnāhu birūḥi l-qudusi  afakullamā jā'akum rasūlun bimā lā tahwá anfusukumu s-takbartum fafarīqan kadhdhabtum wafarīqan taqtulūna
 ```
-
 
 
 ## Contributors
