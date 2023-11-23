@@ -1,9 +1,8 @@
-import alphabet
-from _types.linked_queue import LinkedQueue
+from . import alphabet
+from ._types import LinkedQueue
 
 
 class ArabicText(LinkedQueue):
-
     class ArabicTextChar:
         def __init__(self, parent, node):
             self._node = node
@@ -37,7 +36,7 @@ class ArabicText(LinkedQueue):
             return ele
 
         def is_blank(self):
-            return self == ' '
+            return self == " "
 
         def is_start(self):
             return self._node is self._parent._head
@@ -52,10 +51,10 @@ class ArabicText(LinkedQueue):
             return self._node is self._parent._tail
 
         def is_word_start(self):
-            return self.prev() == u" " or (not self.prev())
+            return self.prev() == " " or (not self.prev())
 
         def preceeded(self, n):
-            out = u""
+            out = ""
             ele = self
             while n != 0 and ele.prev():
                 out += ele.prev().char()
@@ -64,7 +63,7 @@ class ArabicText(LinkedQueue):
             return out
 
         def succeeded(self, n):
-            out = u""
+            out = ""
             ele = self
             while n != 0 and ele.next():
                 out += ele.next().char()

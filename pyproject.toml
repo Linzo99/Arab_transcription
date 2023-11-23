@@ -1,3 +1,13 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 
+[project]
+readme = "README.md"
+name = "arab_transliterator"
+version = "1.0.3"
+authors = [{ name = "Linzo99", email = "sallalioune99@gmail.com" }]
+description = "python script for arabic text transcription"
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/Tariha/transcription"

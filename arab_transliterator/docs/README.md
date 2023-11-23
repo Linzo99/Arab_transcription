@@ -236,13 +236,13 @@ pip install arab-transliterator
 ```
 
 ```bash
-python -m arab_transliterator.transliterator [-t arab_text] [-f arab_file]
+python3 -m transliterator [-t arab_text] [-f arab_file]
 ```
 
 **Ex1**.
 
 ```bash
-python -m arab_transliterator.transliterator -t "وَلَقَدْ آتَيْنَا مُوسَى الْكِتَابَ وَقَفَّيْنَا مِن بَعْدِهِ بِالرُّسُلِ ۖ وَآتَيْنَا عِيسَى ابْنَ مَرْيَمَ الْبَيِّنَاتِ وَأَيَّدْنَاهُ بِرُوحِ الْقُدُسِ ۗ أَفَكُلَّمَا جَاءَكُمْ رَسُولٌ بِمَا لَا تَهْوَىٰ أَنفُسُكُمُ اسْتَكْبَرْتُمْ فَفَرِيقًا كَذَّبْتُمْ وَفَرِيقًا تَقْتُلُونَ
+python3 -m transliterator -t "وَلَقَدْ آتَيْنَا مُوسَى الْكِتَابَ وَقَفَّيْنَا مِن بَعْدِهِ بِالرُّسُلِ ۖ وَآتَيْنَا عِيسَى ابْنَ مَرْيَمَ الْبَيِّنَاتِ وَأَيَّدْنَاهُ بِرُوحِ الْقُدُسِ ۗ أَفَكُلَّمَا جَاءَكُمْ رَسُولٌ بِمَا لَا تَهْوَىٰ أَنفُسُكُمُ اسْتَكْبَرْتُمْ فَفَرِيقًا كَذَّبْتُمْ وَفَرِيقًا تَقْتُلُونَ
 "
 ```
 
@@ -255,7 +255,7 @@ walaqad ’ātaynā mūsá l-kitāba waqaffaynā min baʿdihi birrusuli  wa’ā
 **Ex2**
 
 ```bash
->>> from arab_transliterator.transliterator import ArabTransliterator
+>>> from arab_transliterator import ArabTransliterator
 >>> Trans = ArabTransliterator()
 >>> Trans.translate("وَفَرِيقًا تَقْتُلُونَ")
 'wafarīqan taqtulūna'
